@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Test API Documentation
+  description: Test API documentation
+  termsOfService: "urn:tos"
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0"
+  version: "1.0"
+tags:
+  - name: User
+    description: User controller
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  schemas:
+    ErrorResponse:
+      required:
+        - errors
+      type: object
+      properties:
+        errorModel:
+          $ref: "#/components/schemas/ErrorModel"
+    ErrorModel:
+      required:
+        - errorCode
+        - defaultErrorMessage
+        - params
+      type: object
+      properties:
+        errorCode:
+          $ref: "#/components/schemas/ErrorCodes"
+        message:
+          type: string
+        descriptors:
+          type: array
+          items:
+            type: string
+    ErrorCodes:
+      type: string
+      enum:
+        - BAD_REQUEST_ERROR
+        - MALFORMED_DATA
+    UserRegisterRequest:
+      required:
+        - displayName
+      type: object
+      properties:
+        displayName:
+          type: string
+    UserProfileResponse:
+      required:
+        - displayName
+        - id
+        - isGuest
+      type: object
+      properties:
+        displayName:
+          type: string
+        id:
+          type: string
+        profilePictureId:
+          type: string
+        email:
+          type: string
+        isGuest:
+          type: boolean
+
+paths:
+  /v1/users/register:
+    post:
+      security:
+        - BearerAuth: []
+      tags:
+        - User
+      summary: Register
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegisterRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
