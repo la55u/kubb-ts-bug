@@ -49,56 +49,39 @@ components:
       enum:
         - BAD_REQUEST_ERROR
         - MALFORMED_DATA
-    UserRegisterRequest:
+    UserPlaceResponse:
       required:
-        - displayName
-      type: object
-      properties:
-        displayName:
-          type: string
-    UserProfileResponse:
-      required:
-        - displayName
         - id
-        - isGuest
+        - name
+        - couponCount
       type: object
       properties:
-        displayName:
-          type: string
         id:
           type: string
-        profilePictureId:
+        name:
           type: string
-        email:
+        couponCount:
+          type: integer
+        description:
           type: string
-        isGuest:
-          type: boolean
 
 paths:
-  /v1/users/register:
-    post:
+  /v1/promoted-places/daily-promoted-place:
+    get:
       security:
         - BearerAuth: []
       tags:
-        - User
-      summary: Register
-      operationId: registerUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserRegisterRequest"
+        - UserPromotedPlace
+      summary: Get daily promoted place
+      operationId: getDailyPromotedPlace
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserProfileResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/UserPlaceResponse"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden

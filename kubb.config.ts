@@ -1,4 +1,5 @@
 import { defineConfig } from "@kubb/core";
+import createSwaggerTanstackQuery from "@kubb/swagger-tanstack-query";
 
 export default defineConfig(async () => {
   return {
@@ -35,6 +36,14 @@ export default defineConfig(async () => {
           client: "./client.ts",
         },
       ],
+      [
+        "@kubb/swagger-tanstack-query",
+        {
+          output: " hooks.ts",
+          client: "./client.ts",
+        },
+      ],
+      // createSwaggerTanstackQuery({ client: "./client.ts", output: "hooks.ts" }),
     ],
   };
 });

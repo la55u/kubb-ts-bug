@@ -4,34 +4,23 @@ export const ErrorCodes = {
 } as const;
 export type ErrorCodes = (typeof ErrorCodes)[keyof typeof ErrorCodes];
 
-export type UserProfileResponse = {
-  /**
-   * @type string
-   */
-  displayName: string;
+export type UserPlaceResponse = {
   /**
    * @type string
    */
   id: string;
   /**
-   * @type string | undefined
-   */
-  profilePictureId?: string;
-  /**
-   * @type string | undefined
-   */
-  email?: string;
-  /**
-   * @type boolean
-   */
-  isGuest: boolean;
-};
-
-export type UserRegisterRequest = {
-  /**
    * @type string
    */
-  displayName: string;
+  name: string;
+  /**
+   * @type integer
+   */
+  couponCount: number;
+  /**
+   * @type string | undefined
+   */
+  description?: string;
 };
 
 export type ErrorModel = {
@@ -50,16 +39,17 @@ export type ErrorResponse = {
   errorModel?: ErrorModel;
 };
 
-export type RegisterUserMutationResponse = any | null;
+/**
+ * @description Unauthorized
+ */
+export type GetDailyPromotedPlace401 = any | null;
 
 /**
- * @description Created
+ * @description Forbidden
  */
-export type RegisterUser201 = UserProfileResponse;
+export type GetDailyPromotedPlace403 = any | null;
 
 /**
- * @description Bad Request
+ * @description OK
  */
-export type RegisterUser400 = ErrorResponse;
-
-export type RegisterUserMutationRequest = UserRegisterRequest;
+export type GetDailyPromotedPlaceQueryResponse = UserPlaceResponse;

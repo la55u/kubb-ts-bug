@@ -1,34 +1,27 @@
 import client from "./client";
 import type { ResponseConfig } from "./client";
-import type {
-  RegisterUserMutationRequest,
-  RegisterUserMutationResponse,
-} from "./models";
+import type { GetDailyPromotedPlaceQueryResponse } from "./models";
 
 /**
- * @summary Register
- * @link /v1/users/register
+ * @summary Get daily promoted place
+ * @link /v1/promoted-places/daily-promoted-place
  */
-
-export async function registerUser<
-  TData = RegisterUserMutationResponse,
-  TVariables = RegisterUserMutationRequest,
+export async function getDailyPromotedPlace<
+  TData = GetDailyPromotedPlaceQueryResponse,
 >(
-  data: TVariables,
   options: Partial<Parameters<typeof client>[0]> = {},
 ): Promise<ResponseConfig<TData>["data"]> {
-  const { data: resData } = await client<TData, TVariables>({
-    method: "post",
-    url: `/v1/users/register`,
-
-    data,
-
+  const { data: resData } = await client<TData>({
+    method: "get",
+    url: `/v1/promoted-places/daily-promoted-place`,
     ...options,
   });
 
   return resData;
 }
-
 export const operations = {
-  registerUser: { path: "/v1/users/register", method: "post" },
+  getDailyPromotedPlace: {
+    path: "/v1/promoted-places/daily-promoted-place",
+    method: "get",
+  },
 } as const;
