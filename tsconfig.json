@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "ESNext"],
+    "module": "ES2020",
+    "moduleResolution": "Bundler",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "jsx": "react-jsx",
+    "outDir": "es",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "types": []
+  },
+  "include": ["./gen/**/*", "kubb.config.ts", "main.tsx"],
+  "exclude": ["**/node_modules", "**/types/**", "**/mocks/**"]
+}

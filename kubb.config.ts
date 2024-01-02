@@ -1,5 +1,8 @@
 import { defineConfig } from "@kubb/core";
+import createSwagger, { Exclude } from "@kubb/swagger";
+import createSwaggerClient from "@kubb/swagger-client";
 import createSwaggerTanstackQuery from "@kubb/swagger-tanstack-query";
+import createSwaggerTS from "@kubb/swagger-ts";
 
 export default defineConfig(async () => {
   return {
@@ -15,35 +18,24 @@ export default defineConfig(async () => {
       done: ['prettier --write "./gen/*.ts"'],
     },
     plugins: [
-      [
-        "@kubb/swagger",
-        {
-          output: false,
-          validate: true,
-        },
-      ],
-      [
-        "@kubb/swagger-ts",
-        {
-          output: "models.ts",
-          enumType: "asPascalConst",
-        },
-      ],
-      [
-        "@kubb/swagger-client",
-        {
-          output: "./request.ts",
-          client: "./client.ts",
-        },
-      ],
-      [
-        "@kubb/swagger-tanstack-query",
-        {
-          output: " hooks.ts",
-          client: "./client.ts",
-        },
-      ],
-      // createSwaggerTanstackQuery({ client: "./client.ts", output: "hooks.ts" }),
+      createSwagger({
+        output: false,
+        validate: false,
+      }),
+      createSwaggerTS({
+        output: { path: "models.ts" },
+      }),
+      createSwaggerClient({
+        dataReturnType: "data",
+        output: { path: "./request.ts" },
+        client: {importPath:"../client.ts"},
+      }),
+      createSwaggerTanstackQuery({
+        dataReturnType: "data",
+        output: { path: "hooks.ts" },
+        client: {importPath:"../client.ts"},
+        infinite: {},
+      }),
     ],
   };
 });
