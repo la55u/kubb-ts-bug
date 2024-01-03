@@ -1,16 +1,16 @@
-import { useAddPet } from "./gen/hooks";
+import { useGetLikedPlaces, useGetLikedPlacesInfinite } from "./gen/hooks";
 
-const add = useAddPet();
-
-add.mutate(
-  {
-    category: { id: 1, name: "mammal" },
-    name: "Lion",
-    photoUrls: [],
-  },
-  {
-    onSuccess: (data) => {
-      //
+function Test() {
+  const { data } = useGetLikedPlacesInfinite(undefined, {
+    query: {
+      select: (data) => ({
+        ...data,
+        pages: data.pages.flatMap((p) => p.content),
+      }),
     },
-  }
-);
+  });
+
+  if (!data) return null;
+
+  type A = typeof data.pages;
+}
