@@ -23,19 +23,20 @@ export default defineConfig(async () => {
         validate: false,
       }),
       createSwaggerTS({
+        exclude: [{ type: "tag", pattern: /UserLikedPlace/ }],
         output: { path: "models.ts" },
       }),
-      createSwaggerClient({
-        dataReturnType: "data",
-        output: { path: "./request.ts" },
-        client: {importPath:"../client.ts"},
-      }),
-      createSwaggerTanstackQuery({
-        dataReturnType: "data",
-        output: { path: "hooks.ts" },
-        client: {importPath:"../client.ts"},
-        infinite: {},
-      }),
+      // createSwaggerClient({
+      //   dataReturnType: "data",
+      //   output: { path: "./request.ts" },
+      //   client: {importPath:"../client.ts"},
+      // }),
+      // createSwaggerTanstackQuery({
+      //   dataReturnType: "data",
+      //   output: { path: "hooks.ts" },
+      //   client: {importPath:"../client.ts"},
+      //   infinite: {},
+      // }),
     ],
   };
 });
